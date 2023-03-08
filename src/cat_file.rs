@@ -29,7 +29,7 @@ where
     let mut reader = BufReader::new(reader);
 
     let mut buffer = Vec::new();
-    reader.read_until(' ' as u8, &mut buffer)?
+    reader.read_until(' ' as u8, &mut buffer)?;
     buffer.pop();
 
     let object_type = String::from_utf8(buffer.clone())?;
