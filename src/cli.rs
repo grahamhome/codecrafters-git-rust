@@ -3,7 +3,7 @@ use clap::{Parser, Subcommand};
 #[derive(Parser)]
 pub struct Cli {
     #[command(subcommand)]
-    pub command: Subcommands,
+    pub command: SubCommands,
 }
 
 #[derive(Subcommand)]

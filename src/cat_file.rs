@@ -41,7 +41,7 @@ where
     reader.read_until(0, &mut buffer)?;
     buffer.pop();
 
-    let size = Sgtring::from_utf8(buffer.clone())?.parse::<usize>()?;
+    let size = String::from_utf8(buffer.clone())?.parse::<usize>()?;
 
     let actual_size = std::io::copy(&mut reader, &mut stdout())?;
     if actual_size != size as u64 {
