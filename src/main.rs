@@ -1,20 +1,29 @@
-#[allow(unused_imports)]
-use std::env;
-#[allow(unused_imports)]
+extern crate core;
+
+use anyhow::{anyhow, Result};
+use clap::Parser;
+use cli::Cli;
 use std::fs;
 
-fn main() {
-    // You can use print statements as follows for debugging, they'll be visible when running tests.
-    println!("Logs from your program will appear here!");
+mod cat_file;
+mod cli;
 
-    let args: Vec<String> = env::args().collect();
-    if args[1] == "init" {
-        fs::create_dir(".git").unwrap();
-        fs::create_dir(".git/objects").unwrap();
-        fs::create_dir(".git/refs").unwrap();
-        fs::write(".git/HEAD", "ref: refs/heads/master\n").unwrap();
-        println!("Initialized git directory")
-    } else {
-        println!("unknown command: {}", args[1])
+fn main() -> Result<()> {
+    let git_cli = Cli::parse();
+    match git_cli.command {
+        cli::SubCommands::Init => {
+            fs::create_dir(".git").unwrap();
+            fs::create_dir(".git/objects").unwrap();
+            fs::create_dir(".git/refs").unwrap();
+            fs::write(".git/HEAD", "ref: refs/heads/master\n").unwrap();
+            println!("Initialized git directory")
+        }
+        cli::SubCommands::CatFile { pretty_print, hash } => {
+            if !pretty_print {
+                return Err(anyhow!("THe -p flag is required"))
+            }
+            cat_file::pretty_cat_file(hash)?;
+        }
     }
+    Ok(())
 }
