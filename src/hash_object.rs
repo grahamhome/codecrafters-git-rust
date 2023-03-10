@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 use sha1::{Digest, Sha1};
 
 pub fn hash_and_write_file(path: PathBuf) -> Result<String> {
-    let source_file = File::open(path);
+    let source_file = File::open(path)?;
     let size = source_file.metadata()?.len();
     let mut reader = BufReader::new(source_file);
 
@@ -24,7 +24,7 @@ pub fn hash_and_write_file(path: PathBuf) -> Result<String> {
 
     let output_file = create_output_file(&hash)?;
 
-    let mut zlib_reader = ZLibEncoder::new(BufReader::new(&buffer[..]), Compression::fast());
+    let mut zlib_reader = ZlibEncoder::new(BufReader::new(&buffer[..]), Compression::fast());
 
     std::io::copy(&mut zlib_reader, &mut BufWriter::new(output_file));
 
