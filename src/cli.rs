@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use std::path::{PathBuf};
 
 #[derive(Parser)]
 pub struct Cli {
@@ -13,5 +14,10 @@ pub enum SubCommands {
         #[arg(short)]
         pretty_print: bool,
         hash: String,
-    }
+    },
+    Read {
+        #[arg(short)]
+        write: bool,
+        file: PathBuf,
+    },
 }

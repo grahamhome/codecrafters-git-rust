@@ -6,6 +6,7 @@ use cli::Cli;
 use std::fs;
 
 mod cat_file;
+mod hash_object;
 mod cli;
 
 fn main() -> Result<()> {
@@ -19,10 +20,10 @@ fn main() -> Result<()> {
             println!("Initialized git directory")
         }
         cli::SubCommands::CatFile { pretty_print, hash } => {
-            if !pretty_print {
-                return Err(anyhow!("THe -p flag is required"))
-            }
             cat_file::pretty_cat_file(hash)?;
+        }
+        cli::SubCommands::Read { write, file } => {
+            println!("{}", hash_object::hash_and_write_file(file)?);
         }
     }
     Ok(())
