@@ -15,7 +15,7 @@ pub enum SubCommands {
         pretty_print: bool,
         hash: String,
     },
-    Read {
+    HashObject {
         #[arg(short)]
         write: bool,
         file: PathBuf,

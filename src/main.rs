@@ -22,7 +22,7 @@ fn main() -> Result<()> {
         cli::SubCommands::CatFile { pretty_print, hash } => {
             cat_file::pretty_cat_file(hash)?;
         }
-        cli::SubCommands::Read { write, file } => {
+        cli::SubCommands::HashObject { write, file } => {
             println!("{}", hash_object::hash_and_write_file(file)?);
         }
     }
