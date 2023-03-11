@@ -20,9 +20,15 @@ fn main() -> Result<()> {
             println!("Initialized git directory")
         }
         cli::SubCommands::CatFile { pretty_print, hash } => {
+            if !pretty_print {
+                return Err(anyhow!("The -p flag is required"))
+            }
             cat_file::pretty_cat_file(hash)?;
         }
         cli::SubCommands::HashObject { write, file } => {
+            if !write {
+                return Err(anyhow!("The -w flag is required"))
+            }
             println!("{}", hash_object::hash_and_write_file(file)?);
         }
     }

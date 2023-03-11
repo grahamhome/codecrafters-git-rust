@@ -18,7 +18,7 @@ pub fn hash_and_write_file(path: PathBuf) -> Result<String> {
     buffer.push(0);
 
     // Write content
-    reader.read_to_end(&mut buffer);
+    reader.read_to_end(&mut buffer)?;
 
     let hash = calculate_sha1(&mut buffer);
 
