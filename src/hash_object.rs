@@ -39,7 +39,7 @@ fn calculate_sha1(buffer: &Vec<u8>) -> String {
 
 fn create_output_file(hash: &String) -> std::io::Result<File> {
     let sub_directory: String = hash.chars().take(2).collect();
-    let file_name: String = hash.chars().take(2).collect();
+    let file_name: String = hash.chars().skip(2).collect();
     let mut output_path = Path::new(".git").join("objects").join(sub_directory);
     if !output_path.exists() {
         create_dir(output_path.clone())?;
