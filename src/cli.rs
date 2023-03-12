@@ -20,4 +20,9 @@ pub enum SubCommands {
         write: bool,
         file: PathBuf,
     },
+    LsTree {
+        #[arg(long)]
+        name_only: bool,
+        hash: String,
+    }
 }
