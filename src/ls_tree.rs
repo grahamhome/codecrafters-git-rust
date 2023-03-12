@@ -19,11 +19,11 @@ fn print_names(content: Vec<u8>) -> Result<()> {
     let mut reader = BufReader::new(Cursor::new(content));
     while reader.stream_position()? < content_len as u64 {
         let mut buffer = Vec::new();
-        reader.read_until(' ' as u8, &mut buffer);
+        reader.read_until(' ' as u8, &mut buffer)?;
         buffer.pop();
 
         buffer.clear();
-        reader.read_until(0, &mut buffer);
+        reader.read_until(0, &mut buffer)?;
         buffer.pop();
 
         let file_name = String::from_utf8(buffer)?;

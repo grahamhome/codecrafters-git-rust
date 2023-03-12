@@ -26,7 +26,7 @@ pub fn hash_and_write_file(path: PathBuf) -> Result<String> {
 
     let mut zlib_reader = ZlibEncoder::new(BufReader::new(&buffer[..]), Compression::fast());
 
-    std::io::copy(&mut zlib_reader, &mut BufWriter::new(output_file));
+    std::io::copy(&mut zlib_reader, &mut BufWriter::new(output_file))?;
 
     Ok(hash)
 }

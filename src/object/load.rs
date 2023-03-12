@@ -15,7 +15,7 @@ pub fn load_object(hash: String) -> Result<GitObject> {
     }
     let sub_directory: String = hash.chars().take(2).collect();
     let file_name: String = hash.chars().skip(2).collect();
-    let path = Path::new(.git)
+    let path = Path::new(".git")
         .join("objects")
         .join(sub_directory)
         .join(file_name);

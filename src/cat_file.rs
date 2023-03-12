@@ -1,4 +1,4 @@
-use crate::object::{load_object, validate_sha1, GitObject}
+use crate::object::{load_object, validate_sha1, GitObject};
 use anyhow::{anyhow, Result};
 use std::io::{stdout, Cursor, Read};
 
