@@ -24,5 +24,6 @@ pub enum SubCommands {
         #[arg(long)]
         name_only: bool,
         hash: String,
-    }
+    },
+    WriteTree,
 }
