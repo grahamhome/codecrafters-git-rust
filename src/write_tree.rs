@@ -37,7 +37,7 @@ pub fn write_tree<P: AsRef<Path>>(path:P) -> Result<String> {
             continue;
         };
 
-        content.extend_from_slice(format!("{:o}", mode).as_bytes());
+        content.extend_from_slice(format!("{:o} ", mode).as_bytes());
         content.extend_from_slice(file.file_name().as_bytes());
         content.push(0);
         content.append(&mut hex::decode(hash)?);
