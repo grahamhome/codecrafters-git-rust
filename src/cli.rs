@@ -7,6 +7,7 @@ pub struct Cli {
     pub command: SubCommands,
 }
 
+/// The commands supported by this Git clone.
 #[derive(Subcommand)]
 pub enum SubCommands {
     Init,
