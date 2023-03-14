@@ -10,14 +10,16 @@ use std::path::Path;
 /// and use this hash to create a file containing the input file's ZLib-encoded
 /// header + contents.
 pub fn hash_and_write_file<P: AsRef<Path>>(path: P) -> Result<String> {
-    // Open source file and read contents into buffer
+    // Open source file
     let source_file = File::open(path)?;
     let mut reader = BufReader::new(source_file);
 
+    // Read entire file contents into buffer
     let mut buffer = Vec::new();
     reader.read_to_end(&mut buffer)?;
 
-    // Create GitObject and write it to a file.
+    // Create GitObject from the file contents and write it to a file.
+    // Return the hash of this Git object.
     store_object(GitObject {
         object_type: "blob".to_string(),
         content: buffer,

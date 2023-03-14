@@ -15,7 +15,7 @@ pub fn store_object(mut object: GitObject) -> Result<String> {
     // object type, object content length and object content.
     let mut buffer = Vec::new();
 
-    // Write the header - object type, space, object content length, 0
+    // Write the header - object type, space, object content length, null
     buffer.extend(object.object_type.as_bytes());
     buffer.extend(" ".as_bytes());
     buffer.extend(object.content.len().to_string().as_bytes());
@@ -27,7 +27,7 @@ pub fn store_object(mut object: GitObject) -> Result<String> {
     // Hash the header + content
     let hash = calculate_sha1(&mut buffer);
 
-    // Ensure output file exists for object's content
+    // Ensure output file exists for object's content based on object's hash
     let output_file = create_output_file(&hash)?;
 
     // Create a ZLib encoder for the header + content

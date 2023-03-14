@@ -27,4 +27,13 @@ pub enum SubCommands {
         hash: String,
     },
     WriteTree,
+    CommitTree {
+        hash: String,
+
+        #[arg(short)]
+        parent_hash: String,
+
+        #[arg(short)]
+        message: String,
+    }
 }

@@ -34,17 +34,19 @@ where R: Read,
 {
    let mut reader = BufReader::new(reader);
 
-    // Read in object type from header
+    // Read in object type from header: first bit of text followed by a space
     let mut buffer = Vec::new();
     reader.read_until(' ' as u8, &mut buffer)?;
+    // Discard the space
     buffer.pop();
     let object_type = String::from_utf8(buffer.clone())?;
 
-    // Read in object size from header
+    // Read in object size from header: next bit of text followed by a null character
     buffer.clear();
     reader.read_until(0, &mut buffer)?;
     buffer.pop();
 
+    // Parse the size to an unsigned integer (since size is always a positive quantity)
     let size = String::from_utf8(buffer.clone())?.parse::<usize>()?;
 
     // Read object content and verify length

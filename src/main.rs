@@ -11,6 +11,7 @@ mod cli;
 mod ls_tree;
 mod object;
 mod write_tree;
+mod commit_tree;
 
 /// Parse the command-line arguments and execute the given command.
 fn main() -> Result<()> {
@@ -18,8 +19,10 @@ fn main() -> Result<()> {
     match git_cli.command {
         // Initialize a directory as a Git repo.
         cli::SubCommands::Init => {
+            // Create the .git/objects directory where Git objects will be stored
             fs::create_dir(".git").unwrap();
             fs::create_dir(".git/objects").unwrap();
+            // What is this directory for?
             fs::create_dir(".git/refs").unwrap();
             fs::write(".git/HEAD", "ref: refs/heads/master\n").unwrap();
             println!("Initialized git directory")
@@ -49,6 +52,14 @@ fn main() -> Result<()> {
         // directory's hash.
         cli::SubCommands::WriteTree => {
             let hash = write_tree::write_tree(".")?;
+            println!("{}", hash);
+        }
+        cli::SubCommands::CommitTree{
+            hash,
+            parent_hash,
+            message
+        } => {
+            let hash = commit_tree::commit_tree(hash, parent_hash, message)?;
             println!("{}", hash);
         }
     }

@@ -13,6 +13,8 @@ pub fn pretty_cat_file(hash: String) -> Result<()> {
         content,
     } = load_object(hash)?;
 
+    // Verify object type in case this function was given a hash for another type of Git object
+    // such as a file tree or a commit.
     if object_type.as_str() != "blob" {
         return Err(anyhow!("Unsupported object type: {}", object_type));
     }
@@ -27,6 +29,7 @@ fn print_blob<R>(mut reader: R) -> Result<()>
 where
     R: Read,
 {
+    // Simply copy the contents of the reader to stdout.
     std::io::copy(&mut reader, &mut stdout())?;
     Ok(())
 }
